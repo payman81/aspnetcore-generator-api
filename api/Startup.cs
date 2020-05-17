@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace api
@@ -25,29 +27,27 @@ namespace api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-                .AddXmlSerializerFormatters();
-                
+            services
+                .AddControllers()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                ;
+
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Generate Random Data API", Version = "v1" });
+                c.SwaggerDoc(name:"v1", new OpenApiInfo{Title = "Generate Random Data API", Version = "v1"});
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseMvc();
-
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Generate Random Data API V1");
-            });
-
-            var redirectRootToSwagger = new RewriteOptions()
-                .AddRedirect("^$", "swagger");
-            app.UseRewriter(redirectRootToSwagger);
+            app.UseSwagger()
+                .UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Generate Random Data API V1"); })
+                .UseRewriter(new RewriteOptions()
+                    .AddRedirect("^$", "swagger")
+                )
+                .UseRouting()
+                .UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }

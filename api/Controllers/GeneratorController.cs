@@ -13,7 +13,8 @@ namespace api.Controllers
 {
     // Just use action name as route
     [Route("[action]")]
-    public class GenerateController : Controller
+    [ApiController]
+    public class GenerateController : ControllerBase
     {
         public const string MAIL_HOST = "mail";
         public const int MAIL_PORT = 1025;
@@ -39,39 +40,39 @@ namespace api.Controllers
         }
         
         [HttpGet]
-        public IEnumerable<string> Names(Range range)
+        public IEnumerable<string> Names([FromQuery]Range range)
             => range.Of(Name.FullName);
 
         [HttpGet]
-        public IEnumerable<string> PhoneNumbers(Range range)
+        public IEnumerable<string> PhoneNumbers([FromQuery]Range range)
             => range.Of(Phone.Number);
 
         [HttpGet]
-        public IEnumerable<int> Numbers(Range range)
+        public IEnumerable<int> Numbers([FromQuery]Range range)
             => range.Of(RandomNumber.Next);
 
         [HttpGet]
-        public IEnumerable<string> Companies(Range range)
+        public IEnumerable<string> Companies([FromQuery]Range range)
             => range.Of(Company.Name);
 
         [HttpGet]
-        public IEnumerable<string> Paragraphs(Range range)
+        public IEnumerable<string> Paragraphs([FromQuery]Range range)
             => range.Of(() => Lorem.Paragraph(3));
 
         [HttpGet]
-        public IEnumerable<string> CatchPhrases(Range range)
+        public IEnumerable<string> CatchPhrases([FromQuery]Range range)
             => range.Of(Company.CatchPhrase);
 
         [HttpGet]
-        public IEnumerable<string> Marketing(Range range)
+        public IEnumerable<string> Marketing([FromQuery]Range range)
             => range.Of(Company.BS);
 
         [HttpGet]
-        public IEnumerable<string> Emails(Range range)
+        public IEnumerable<string> Emails([FromQuery]Range range)
             => range.Of(Internet.Email);
 
         [HttpGet]
-        public IEnumerable<string> Domains(Range range)
+        public IEnumerable<string> Domains([FromQuery]Range range)
             => range.Of(Internet.DomainName);
     }
 }
