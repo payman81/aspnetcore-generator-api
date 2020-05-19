@@ -11,7 +11,8 @@ RUN dotnet restore generator.sln
 #copy source
 COPY . .
 
-#test
+#test - xunit env for better TC reporting
+ENV TEAMCITY_PROJECT_NAME=fake  
 RUN dotnet test tests/tests.csproj
 
 #publish
