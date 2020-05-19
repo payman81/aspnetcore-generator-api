@@ -1,0 +1,2 @@
+docker build -t testing .
+docker run --rm testing ls -alR
