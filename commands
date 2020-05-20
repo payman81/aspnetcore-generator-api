@@ -9,3 +9,6 @@ docker build -t my-registry:55000/aspnetcore/generator:integration-1 .
 
 # allow containers to be stopped after tests are complete. 
 docker-compose up --force-recreate --abort-on-container-exit --build
+
+#View compose output after setting env variable
+BUILD_NUMBER=2  docker-compose config
