@@ -5,6 +5,7 @@ WORKDIR /generator
 # restore
 COPY api/api.csproj api/
 COPY tests/tests.csproj tests/
+COPY integration/integration.csproj integration/
 COPY generator.sln .
 RUN dotnet restore generator.sln
 
