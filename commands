@@ -1,2 +1,11 @@
 docker build -t testing .
 docker run --rm testing ls -alR
+
+docker run --rm testing ls -alR
+docker run --rm -p 8080:80 my-registry:55000/aspnetcore/generator:ci-5
+
+cd integration
+docker build -t my-registry:55000/aspnetcore/generator:integration-1 .
+
+# allow containers to be stopped after tests are complete. 
+docker-compose up --force-recreate --abort-on-container-exit --build
