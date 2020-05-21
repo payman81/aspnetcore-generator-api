@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+  generator:
+    image: my-registry:55000/aspnetcore/generator:ci-${GENERATOR_BUILD_NUMBER-8}
+    ports:
+      - "8080:80"
+  mail:
+    image: mailhog/mailhog
+    ports:
+      - "8081:8025"
+  
+    

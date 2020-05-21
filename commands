@@ -12,3 +12,15 @@ docker-compose up --force-recreate --abort-on-container-exit --build
 
 #View compose output after setting env variable
 BUILD_NUMBER=2  docker-compose config
+
+#Deploy app to environments - Use docker swarm to spin up a cluster of containers
+docker swarm init
+docker node ls
+--docker swarm join --token SWMTKN-1-01x9hd2dy7yuiujp6b3t18mdteid8xnjj4vb3op7qo57lowllc-egtynlfx7z5ndounn4dyii4r6 192.168.65.3:2377
+docker stack -h
+cd infra/swarm
+docker stack deploy -c services/viz.yml viz
+
+#deploy app to docker swarm
+cd deploy
+docker stack deploy -c demo.yml demo
