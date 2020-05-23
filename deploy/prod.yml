@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   generator:
-    image: my-registry:55000/aspnetcore/generator:ci-${GENERATOR_BUILD_NUMBER-8}
+    image: my-registry:55000/aspnetcore/generator:ci-${GENERATOR_BUILD_NUMBER-10}
     ports:
       - "${PORT_GENERATOR-80}:80"
     configs:

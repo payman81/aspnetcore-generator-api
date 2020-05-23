@@ -28,3 +28,8 @@ docker stack deploy -c demo.yml demo
 #scale docker swarm
 docker service ls
 docker service scale demo_generator=2
+
+#deploy to prod
+docker stack deploy -c prod-via-environment.yml prod
+docker service logs prod_generator  #to check the logs to confirm mail server host was passed from environment
+docker stack deploy -c prod.yml prod
