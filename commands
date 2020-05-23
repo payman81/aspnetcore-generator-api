@@ -24,3 +24,7 @@ docker stack deploy -c services/viz.yml viz
 #deploy app to docker swarm
 cd deploy
 docker stack deploy -c demo.yml demo
+
+#scale docker swarm
+docker service ls
+docker service scale demo_generator=2

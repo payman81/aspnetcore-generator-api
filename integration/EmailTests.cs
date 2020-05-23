@@ -11,6 +11,7 @@ using Xunit;
 
 namespace integration
 {
+    
     public class EmailTests
     {
         public const string GeneratorApiRoot = "http://generator";

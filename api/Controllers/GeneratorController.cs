@@ -8,6 +8,7 @@ using Faker.Extensions;
 using MimeKit;
 using MailKit.Net.Smtp;
 using MailKit.Security;
+using Microsoft.Extensions.Options;
 
 namespace api.Controllers
 {
@@ -16,9 +17,16 @@ namespace api.Controllers
     [ApiController]
     public class GenerateController : ControllerBase
     {
-        public const string MAIL_HOST = "mail";
-        public const int MAIL_PORT = 1025;
+        private readonly string MailHost;
+        private readonly int MailPort;
 
+        public GenerateController(IOptions<MailServerConfig> mailServerConfigAccessor)
+        {
+            var config = mailServerConfigAccessor.Value;
+            MailHost = config.Host;
+            MailPort = config.Port;
+        }
+        
         [HttpPost]
         public async Task EmailRandomNames(Range range, string email = "test@fake.com")
         {
@@ -33,7 +41,7 @@ namespace api.Controllers
             };
             using (var mailClient = new SmtpClient())
             {
-                await mailClient.ConnectAsync(MAIL_HOST, MAIL_PORT, SecureSocketOptions.None);
+                await mailClient.ConnectAsync(MailHost, MailPort, SecureSocketOptions.None);
                 await mailClient.SendAsync(message);
                 await mailClient.DisconnectAsync(true);
             }

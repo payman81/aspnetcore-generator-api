@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  generator:
+    image: my-registry:55000/aspnetcore/generator:ci-${GENERATOR_BUILD_NUMBER-8}
+    ports:
+      - "${PORT_GENERATOR-80}:80"
+    
+    # One option to provide mail host is to use command arguments
+    #command: /MailServer:host=mailprodarg
+
+    environment:
+      MAILSERVER__HOST: my-prod-mailserver
+      MAILSERVER__PORT: 1025
+
+
+  
+    
